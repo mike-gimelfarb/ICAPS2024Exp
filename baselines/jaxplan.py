@@ -25,7 +25,7 @@ def jax_policy(env, online, do_tune,
                             timeout_training=args['train_seconds'],
                             planner_kwargs=planner_args,
                             plan_kwargs=plan_args,
-                            num_workers=global_args['gp_cpus'],
+                            num_workers=global_args['gp_cpus_jax'],
                             gp_iters=global_args['gp_iters_jax'])
         tuning.hyperparams_dict['T'] = (1, env.horizon, int)
         

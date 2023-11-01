@@ -13,7 +13,7 @@ def gurobi_policy(env, online, do_tune, args, outputpath, global_args):
     if do_tune and online:
         tuning = GurobiParameterTuningReplan(env,
                                              timeout_training=args['train_seconds'],
-                                             num_workers=global_args['gp_cpus'],
+                                             num_workers=global_args['gp_cpus_gurobi'],
                                              gp_iters=global_args['gp_iters_gurobi'])
         tuning.hyperparams_dict['T'] = (1, env.horizon, int)
         
