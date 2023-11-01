@@ -73,9 +73,13 @@ def main(domain, instance, method, online, do_tune):
 
 
 if __name__ == '__main__':
-    domain, instance, method, online, do_tune = 'CooperativeRecon_MDP_ippc2011', '3', 'gurobi', True, True
-    # domain, instance, method, do_tune = sys.argv[1:5]
+    args = sys.argv
+    if len(args) > 5:
+        domain, instance, method, online, do_tune = args[1:6]
+    else:
+        domain, instance, method, online, do_tune = 'CooperativeRecon_MDP_ippc2011', '3', 'gurobi', True, True
     online = online in {'True', 'true', True, '1', 1}
     do_tune = do_tune in {'True', 'true', True, '1', 1}
+    
     main(domain, instance, method, online, do_tune)
     
