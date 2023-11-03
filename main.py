@@ -16,9 +16,9 @@ ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 _, global_args = _parse_config_file(os.path.join(ROOT_PATH, 'global.cfg'))
 
 
-def main(domain, instance, method, online, do_tune):
+def main(domain, instance, method, online, do_tune, time):
     outputpath = os.path.join(ROOT_PATH, 'outputs', method, 
-                              f'{domain}_{instance}_{method}_{online}')
+                              f'{domain}_{instance}_{method}_{online}_{time}')
     
     # create the environment
     EnvInfo = RDDLRepoManager().get_problem(domain)   
@@ -32,19 +32,19 @@ def main(domain, instance, method, online, do_tune):
     config, args = _parse_config_file(os.path.join(ROOT_PATH, 'configs', f'{domain}.cfg'))
     
     # override default config settings here
-    args['train_seconds'] = global_args['train_seconds_per_epoch'] * (1 if online else env.horizon)
+    args['train_seconds'] = time * (1 if online else env.horizon)
     if not online:
         args['rollout_horizon'] = None
     planner_args, plan_args, train_args = _load_config(config, args)
     
     # dispatch to policy creation method
-    if method == 'jax':
+    if method == 'jaxplan':
         policy = jax_policy(env, online, do_tune, 
                             config, args, planner_args, plan_args, train_args, 
                             outputpath, global_args)
         ground_state = False
         
-    elif method == 'gurobi':
+    elif method == 'gurobiplan':
         policy = gurobi_policy(env, online, do_tune, args, outputpath, global_args)
         ground_state = True
     
@@ -74,12 +74,14 @@ def main(domain, instance, method, online, do_tune):
 
 if __name__ == '__main__':
     args = sys.argv
-    if len(args) > 5:
-        domain, instance, method, online, do_tune = args[1:6]
+    if len(args) > 6:
+        domain, instance, method, online, do_tune, time = args[1:7]
     else:
-        domain, instance, method, online, do_tune = 'CooperativeRecon_MDP_ippc2011', '3', 'gurobi', True, True
+        domain, instance, method, online, do_tune, time = \
+            'Wildfire_MDP_ippc2014', '1', 'jaxplan', True, True, 1
     online = online in {'True', 'true', True, '1', 1}
     do_tune = do_tune in {'True', 'true', True, '1', 1}
+    time = int(time)
     
-    main(domain, instance, method, online, do_tune)
+    main(domain, instance, method, online, do_tune, time)
     

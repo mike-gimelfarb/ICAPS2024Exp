@@ -22,6 +22,7 @@ def jax_policy(env, online, do_tune,
         
         # create tuning instance with horizon range from environment
         tuning = tuning_obj(env=env,
+                            train_epochs=9999999,
                             timeout_training=args['train_seconds'],
                             planner_kwargs=planner_args,
                             plan_kwargs=plan_args,
