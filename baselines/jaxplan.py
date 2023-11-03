@@ -9,12 +9,12 @@ from pyRDDLGym.Core.Jax.JaxRDDLBackpropPlanner import JaxOfflineController
 from pyRDDLGym.Core.Jax.JaxRDDLBackpropPlanner import JaxOnlineController
 
 
-def jax_policy(env, online, do_tune,
+def jax_policy(env, online, tuning,
                config, args, planner_args, plan_args, train_args,
                outputpath, global_args):
     
     # run hyper-parameter tuning
-    if do_tune:
+    if tuning:
         if online:
             tuning_obj = JaxParameterTuningSLPReplan 
         else:
@@ -28,7 +28,6 @@ def jax_policy(env, online, do_tune,
                             plan_kwargs=plan_args,
                             num_workers=global_args['gp_cpus_jax'],
                             gp_iters=global_args['gp_iters_jax'])
-        tuning.hyperparams_dict['T'] = (1, env.horizon, int)
         
         params = tuning.tune(key=jax.random.PRNGKey(int(datetime.now().timestamp())),
                              filename=outputpath + '_gp')
