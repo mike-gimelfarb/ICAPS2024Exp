@@ -14,7 +14,7 @@ ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 _, global_args = _parse_config_file(os.path.join(ROOT_PATH, 'baselines', 'global.cfg'))
 num_cpus = int(os.environ.get('SLURM_CPUS_PER_TASK', default=1))
 global_args['num_cpus'] = num_cpus
-print(f'using {num_cpus} for parallel processing')
+print(f'    using {num_cpus} for parallel processing')
 print('loading global config complete!')
     
 
