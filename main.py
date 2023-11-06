@@ -13,7 +13,7 @@ from baselines.jaxplan import jax_policy
 
 # load global config
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
-_, global_args = _parse_config_file(os.path.join(ROOT_PATH, 'global.cfg'))
+_, global_args = _parse_config_file(os.path.join(ROOT_PATH, 'baselines', 'global.cfg'))
 
 
 def main(domain, instance, method, online, tuning, time):
@@ -58,7 +58,7 @@ def main(domain, instance, method, online, tuning, time):
         raise Exception(f'Invalid method {method}.')
     
     # evaluation
-    result = policy.evaluate(env, verbose=True, episodes=global_args['episodes'])
+    result = policy.evaluate(env, verbose=False, episodes=global_args['episodes'])
     
     # dump all history to files
     with open(outputpath + '.json', 'w') as fp:

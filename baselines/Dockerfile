@@ -65,6 +65,7 @@ RUN cp builds/release/search/search search-release
 
 # Copy in the run scripts
 COPY prost.py /workspace/pyRDDLGym/prost.py
+COPY global.cfg /workspace/pyRDDLGym/global.cfg
 RUN mkdir /workspace/bin
 COPY prost.sh /workspace/bin/rddlprost
 
