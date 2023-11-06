@@ -135,6 +135,7 @@ venv.bak/
 # pydev project settings
 .project
 .pydevproject
+.prefs
 
 # Rope project settings
 .ropeproject
