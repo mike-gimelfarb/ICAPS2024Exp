@@ -13,8 +13,9 @@ def gurobi_policy(env, online, tuning, args, outputpath, global_args):
     if tuning and online:
         tuning = GurobiParameterTuningReplan(env,
                                              timeout_training=args['train_seconds'],
-                                             num_workers=global_args['gp_cpus_gurobi'],
-                                             gp_iters=global_args['gp_iters_gurobi'])
+                                             timeout_tuning=global_args['total_time'],
+                                             num_workers=global_args['cpus_gurobi'],
+                                             gp_iters=9999999)
         
         params = tuning.tune(key=int(datetime.now().timestamp()), 
                              filename=outputpath + '_gp')

@@ -58,7 +58,7 @@ def main(domain, instance, method, online, tuning, time):
         raise Exception(f'Invalid method {method}.')
     
     # evaluation
-    result = policy.evaluate(env, verbose=True, episodes=global_args['runs'])
+    result = policy.evaluate(env, verbose=True, episodes=global_args['episodes'])
     
     # dump all history to files
     with open(outputpath + '.json', 'w') as fp:
