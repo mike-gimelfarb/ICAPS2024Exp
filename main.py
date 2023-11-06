@@ -8,16 +8,18 @@ from pyRDDLGym.Core.Policies.Agents import NoOpAgent, RandomAgent
 
 from rddlrepository.Manager.RDDLRepoManager import RDDLRepoManager as RDDLRepoManager
 
-from baselines.gurobiplan import gurobi_policy
-from baselines.jaxplan import jax_policy
-
 # load global config
+print('loading global config...')
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 _, global_args = _parse_config_file(os.path.join(ROOT_PATH, 'baselines', 'global.cfg'))
-
+num_cpus = int(os.environ.get('SLURM_CPUS_PER_TASK', default=1))
+global_args['num_cpus'] = num_cpus
+print(f'using {num_cpus} for parallel processing')
+print('loading global config complete!')
+    
 
 def main(domain, instance, method, online, tuning, time):
-    outputpath = os.path.join(ROOT_PATH, 'outputs', method, 
+    outputpath = os.path.join(ROOT_PATH, 'outputs', method,
                               f'{domain}_{instance}_{method}_{online}_{time}')
     
     # create the environment
@@ -25,10 +27,12 @@ def main(domain, instance, method, online, tuning, time):
     env = RDDLEnv(domain=EnvInfo.get_domain(),
                   instance=EnvInfo.get_instance(instance),
                   enforce_action_constraints=True,
-                  log=True, 
+                  log=True,
                   log_path=outputpath)
+    env.set_visualizer(None)
     
     # load the config file with planner settings
+    print('loading config...')
     config, args = _parse_config_file(os.path.join(ROOT_PATH, 'configs', f'{domain}.cfg'))
     
     # override default config settings here
@@ -36,14 +40,18 @@ def main(domain, instance, method, online, tuning, time):
     if not online:
         args['rollout_horizon'] = None
     planner_args, plan_args, train_args = _load_config(config, args)
+    print('loading config complete!')
     
     # dispatch to policy creation method
+    print('begin policy creation...')
     if method == 'jaxplan':
-        policy = jax_policy(env, online, tuning, 
-                            config, args, planner_args, plan_args, train_args, 
+        from baselines.jaxplan import jax_policy
+        policy = jax_policy(env, online, tuning,
+                            config, args, planner_args, plan_args, train_args,
                             outputpath, global_args)
         
     elif method == 'gurobiplan':
+        from baselines.gurobiplan import gurobi_policy
         policy = gurobi_policy(env, online, tuning, args, outputpath, global_args)
     
     elif method in ['noop', 'random']:
@@ -56,14 +64,19 @@ def main(domain, instance, method, online, tuning, time):
     
     else:
         raise Exception(f'Invalid method {method}.')
+    print('policy creation complete!')
     
     # evaluation
+    print('begin policy evaluation...')
     result = policy.evaluate(env, verbose=False, episodes=global_args['episodes'])
+    print('policy evaluation complete!')
     
     # dump all history to files
+    print('writing logs...')
     with open(outputpath + '.json', 'w') as fp:
         json.dump(result, fp, indent=4)
     env.close()
+    print('writing logs complete!')
 
 
 if __name__ == '__main__':
@@ -73,6 +86,8 @@ if __name__ == '__main__':
     else:
         domain, instance, method, online, tuning, time = \
             'Wildfire_MDP_ippc2014', '1', 'jaxplan', False, False, 1
+    domain = str(domain)
+    instance = str(instance)
     online = online in {'True', 'true', True, '1', 1}
     tuning = tuning in {'True', 'true', True, '1', 1}
     time = int(time)
