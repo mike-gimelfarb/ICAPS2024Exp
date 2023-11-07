@@ -24,11 +24,10 @@ def jax_policy(env, online, tuning,
         tuning = tuning_obj(env=env,
                             train_epochs=9999999,
                             timeout_training=args['train_seconds'],
-                            timeout_tuning=global_args['total_time'],
                             planner_kwargs=planner_args,
                             plan_kwargs=plan_args,
                             num_workers=global_args['num_cpus'],
-                            gp_iters=9999999)
+                            gp_iters=global_args['rounds'])
         
         params = tuning.tune(key=jax.random.PRNGKey(int(datetime.now().timestamp())),
                              filename=outputpath + '_gp')
