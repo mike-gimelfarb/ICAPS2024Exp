@@ -13,6 +13,7 @@ def gurobi_policy(env, online, tuning, args, outputpath, global_args):
     if tuning and online:
         tuning = GurobiParameterTuningReplan(env,
                                              timeout_training=args['train_seconds'],
+                                             eval_trials=global_args['trials'],
                                              num_workers=global_args['num_cpus'],
                                              gp_iters=global_args['rounds'])
         
