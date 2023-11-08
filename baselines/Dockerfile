@@ -50,7 +50,7 @@ RUN pip3 install --upgrade matplotlib
 RUN pip3 install --upgrade gym
 RUN pip3 install --upgrade pygame
 RUN pip3 install --upgrade requests
-RUN pip3 install --upgrade git+https://github.com/ataitler/rddlrepository
+RUN pip3 install --upgrade git+https://github.com/ataitler/rddlrepository@icaps-fixed
 
 WORKDIR /workspace
 RUN git clone https://github.com/ataitler/pyRDDLGym.git
