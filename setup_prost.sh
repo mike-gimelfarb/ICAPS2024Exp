@@ -9,7 +9,7 @@ echo $WORKSPACE
 echo ""
 
 # reinstall pyRDDLGym
-if [ "$1" == true ]; then
+if [ "$1" = true ]; then
   echo "installing pyrddlgym"
 	rm -rf $WORKSPACE/pyRDDLGym
 	git clone https://github.com/ataitler/pyRDDLGym.git $WORKSPACE/pyRDDLGym
