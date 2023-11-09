@@ -27,7 +27,7 @@ def jax_policy(env, online, tuning,
                             eval_trials=global_args['trials'],
                             planner_kwargs=planner_args,
                             plan_kwargs=plan_args,
-                            num_workers=global_args['num_cpus'],
+                            num_workers=global_args['batch'],
                             gp_iters=global_args['rounds'])
         
         params = tuning.tune(key=jax.random.PRNGKey(int(datetime.now().timestamp())),
