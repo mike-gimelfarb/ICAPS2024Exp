@@ -26,9 +26,7 @@ def main(domain, instance, method, online, tuning, time):
     env = RDDLEnv(domain=EnvInfo.get_domain(),
                   instance=EnvInfo.get_instance(instance),
                   enforce_action_constraints=True,
-                  log=True,
-                  log_path=outputpath)
-    env.set_visualizer(None)
+                  log=True, log_path=outputpath)
     
     # load the config file with planner settings
     print('loading config...')

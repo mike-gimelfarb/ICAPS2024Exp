@@ -13,7 +13,6 @@ def esttime(domain, instance, tuning, time):
     env = RDDLEnv(domain=EnvInfo.get_domain(),
                   instance=EnvInfo.get_instance(instance),
                   enforce_action_constraints=True)
-    env.set_visualizer(None)
     
     ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
     _, global_args = _parse_config_file(os.path.join(ROOT_PATH, 'baselines', 'global.cfg'))
