@@ -5,7 +5,6 @@ import os
 import sys
 
 from pyRDDLGym.Core.Policies.RDDLSimAgent import RDDLSimAgent
-
 from rddlrepository.Manager.RDDLRepoManager import RDDLRepoManager as RDDLRepoManager
 
 args = sys.argv
@@ -25,7 +24,7 @@ EnvInfo = RDDLRepoManager().get_problem(domain)
 domain_path = EnvInfo.get_domain()
 instance_path = EnvInfo.get_instance(instance)
 
-agent = RDDLSimAgent(domain_path, instance_path, rounds, 999999, disable_viz=True)
+agent = RDDLSimAgent(domain_path, instance_path, rounds, 999999)
 agent.run()
 agent.dump_data(os.path.join(os.environ.get('PROST_OUT'), 
                 f'data_{domain}_{instance}_prost_True_{time}.json'))
