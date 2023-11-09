@@ -80,11 +80,7 @@ def main(domain, instance, method, online, tuning, time):
 
 if __name__ == '__main__':
     args = sys.argv
-    if len(args) > 6:
-        domain, instance, method, online, tuning, time = args[1:7]
-    else:
-        domain, instance, method, online, tuning, time = \
-            'Wildfire_MDP_ippc2014', '1', 'jaxplan', False, False, 1
+    domain, instance, method, online, tuning, time = args[1:7]
     domain = str(domain)
     instance = str(instance)
     online = online in {'True', 'true', True, '1', 1}
