@@ -9,7 +9,9 @@ from rddlrepository.Manager.RDDLRepoManager import RDDLRepoManager as RDDLRepoMa
 
 args = sys.argv
 if len(args) != 4:
-    print('Usage: python prost.py <domain> <instance> <time>')
+    print('')
+    print('    Usage: python prost.py <domain> <instance> <time>')
+    print('')
     sys.exit(1)
 domain, instance, time = args[1], args[2], args[3]
 

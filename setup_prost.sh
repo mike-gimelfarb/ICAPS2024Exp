@@ -6,7 +6,7 @@
 echo "setting workspace variable"
 export WORKSPACE=~/workspace
 echo $WORKSPACE
-echo ""
+echo 
 
 # reinstall pyRDDLGym
 if [ "$1" = true ]; then
@@ -19,7 +19,7 @@ fi
 echo "copying required files for prost"
 cp baselines/prost.py $WORKSPACE/pyRDDLGym/prost.py
 cp baselines/global.cfg $WORKSPACE/pyRDDLGym/global.cfg
-echo ""
+echo 
 
 # register prost run command "rddlprost"
 echo "registering rddlprost command"
@@ -28,11 +28,11 @@ cp baselines/prost.sh $WORKSPACE/bin/rddlprost
 export PATH="$WORKSPACE/bin:${PATH}"
 chmod -R 777 $WORKSPACE/bin
 echo $PATH
-echo ""
+echo 
 
 # register folder to store outputs
 echo "registering output folder for prost"
 mkdir -p outputs/prost
 export PROST_OUT="$PWD/outputs/prost"
 echo $PROST_OUT
-echo ""
+echo 

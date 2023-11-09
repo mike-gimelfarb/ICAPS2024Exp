@@ -10,7 +10,7 @@ fi
 
 echo "Starting RDDL Gym Server..."
 ( cd $WORKSPACE/pyRDDLGym && python prost.py "$1" "$2" "$3") > $PROST_OUT/pyrddl_$1_$2_prost_True_$3.log 2>&1 &
-sleep 10
+sleep 5
 
 echo "Starting PROST..."
 ( cd $WORKSPACE/prost && ./search-release 813rocks \
