@@ -10,6 +10,8 @@ from rddlrepository.Manager.RDDLRepoManager import RDDLRepoManager as RDDLRepoMa
     
 
 def main(domain, instance, method, online, tuning, time):
+    print('receiving args...')
+    print(f'args = {domain}, {instance}, {method}, {online}, {tuning}, {time}')
         
     # load global config
     print('loading global config...')
