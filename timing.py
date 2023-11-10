@@ -30,8 +30,7 @@ def esttime(domain, instance, tuning, time):
 
 if __name__ == '__main__':
     args = sys.argv
-    #domain, instance, tuning, time = args[1:7]
-    domain, instance, tuning, time = 'UAV_ippc2023', 1, True, 1
+    domain, instance, tuning, time = args[1:5]
     domain = str(domain)
     instance = str(instance)
     tuning = tuning in {'True', 'true', True, '1', 1}
