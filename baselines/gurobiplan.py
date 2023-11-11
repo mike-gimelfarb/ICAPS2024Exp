@@ -15,8 +15,7 @@ def gurobi_policy(env, online, tuning, args, outputpath, global_args):
                                              timeout_training=args['train_seconds'],
                                              eval_trials=global_args['trials'],
                                              num_workers=global_args['batch'],
-                                             gp_iters=global_args['rounds'])
-        
+                                             gp_iters=global_args['rounds'])        
         params = tuning.tune(key=int(datetime.now().timestamp()), 
                              filename=outputpath + '_gp')
         
@@ -26,8 +25,10 @@ def gurobi_policy(env, online, tuning, args, outputpath, global_args):
         return GurobiOnlineController(rddl=env.model,
                                       plan=GurobiStraightLinePlan(),
                                       rollout_horizon=params['T'],
-                                      model_params=model_params)
+                                      model_params=model_params, 
+                                      verbose=args['verbose'])
     else:
         return GurobiOfflineController(rddl=env.model,
                                        plan=GurobiStraightLinePlan(),
-                                       model_params=model_params)
+                                       model_params=model_params,
+                                       verbose=args['verbose'])

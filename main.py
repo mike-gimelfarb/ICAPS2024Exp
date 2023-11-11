@@ -31,7 +31,7 @@ def main(domain, instance, method, online, tuning, time):
                   log=True, log_path=outputpath)
     
     # load the config file with planner settings
-    print('loading config..., flush=True')
+    print('loading config...', flush=True)
     config, args = _parse_config_file(os.path.join(ROOT_PATH, 'configs', f'{domain}.cfg'))
     
     # override default config settings here
