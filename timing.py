@@ -7,7 +7,7 @@ from pyRDDLGym.Core.Jax.JaxRDDLBackpropPlanner import _parse_config_file
 
 def esttime(horizon=200, tuning=True, time=1, margin=1):
     ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
-    _, global_args = _parse_config_file(os.path.join(ROOT_PATH, 'baselines', 'global.cfg'))
+    _, global_args = _parse_config_file(os.path.join(ROOT_PATH, 'global.cfg'))
     
     time_per_episode = time * horizon
     total_time = 0
@@ -27,4 +27,4 @@ if __name__ == '__main__':
     time = int(time)
     margin = float(margin)
     
-    print(esttime(horizon, tuning, time, margin))
+    print(esttime(horizon, tuning, time, margin), flush=True)

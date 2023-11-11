@@ -16,7 +16,7 @@ def main(domain, instance, method, online, tuning, time):
     # load global config
     print('loading global config...', flush=True)
     ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
-    _, global_args = _parse_config_file(os.path.join(ROOT_PATH, 'baselines', 'global.cfg'))
+    _, global_args = _parse_config_file(os.path.join(ROOT_PATH, 'global.cfg'))
     print('loading global config complete!', flush=True)
     
     # path where to log outputs
@@ -44,20 +44,20 @@ def main(domain, instance, method, online, tuning, time):
     # dispatch to policy creation method
     print('begin policy creation...', flush=True)
     if method == 'jaxplan':
-        from baselines.jaxplan import jax_policy
+        from jaxplan import jax_policy
         policy = jax_policy(env, online, tuning,
                             config, args, planner_args, plan_args, train_args,
                             outputpath, global_args)
         
     elif method == 'gurobiplan':
-        from baselines.gurobiplan import gurobi_policy
+        from gurobiplan import gurobi_policy
         policy = gurobi_policy(env, online, tuning, args, outputpath, global_args)
     
-    elif method in ['noop', 'random']:
-        if method == 'noop':
+    elif method == 'noop':
             policy = NoOpAgent(action_space=env.action_space,
                                num_actions=env.numConcurrentActions)
-        else:
+            
+    elif method == 'random':
             policy = RandomAgent(action_space=env.action_space,
                                  num_actions=env.numConcurrentActions)
     
