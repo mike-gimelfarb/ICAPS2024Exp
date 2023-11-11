@@ -79,8 +79,13 @@ def main(domain, instance, method, online, tuning, time):
 
 
 if __name__ == '__main__':
-    args = sys.argv
-    domain, instance, method, online, tuning, time = args[1:7]
+    args = sys.argv[1:]
+    if len(args) != 6:
+        print('')
+        print('usage main.py <domain> <instance> <method> <online> <tuning> <time>')
+        print('')
+        sys.exit(1)
+    domain, instance, method, online, tuning, time = args[:6]
     domain = str(domain)
     instance = str(instance)
     online = online in {'True', 'true', True, '1', 1}
