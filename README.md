@@ -1,2 +1,8 @@
 # ICAPS2024Exp
-Experiments for ICAPS 2024
+
+To run the prost docker:
+
+```shell-session
+$ docker build -t prost .
+$ source ./run.sh <domain> <instance> <time>
+```
