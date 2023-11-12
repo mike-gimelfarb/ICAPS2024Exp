@@ -7,4 +7,6 @@
 module load gurobi/10.0.3
 source ~/baselines/bin/activate
 echo "Threads ${SLURM_CPUS_ON_NODE:-1}" > gurobi.env
+echo "OutputFlag 0" >> gurobi.env
+echo "NonConvex 2" >> gurobi.env
 python main.py $1 $SLURM_ARRAY_TASK_ID "gurobiplan" $2 True $3
