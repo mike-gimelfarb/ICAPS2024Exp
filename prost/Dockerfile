@@ -53,7 +53,7 @@ RUN pip3 install --upgrade requests
 RUN pip3 install --upgrade git+https://github.com/ataitler/rddlrepository@icaps-fixed
 
 WORKDIR /workspace
-RUN git clone https://github.com/ataitler/pyRDDLGym.git
+RUN git clone https://github.com/ataitler/pyRDDLGym.git@forProstExp
 
 # install prost
 WORKDIR /workspace
