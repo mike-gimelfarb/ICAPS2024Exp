@@ -4,5 +4,5 @@
 rm -rf outputs
 mkdir outputs
 cd outputs
-mkdir jaxplan gurobiplan noop random
+mkdir jaxplan gurobiplan noop prost random
 cd ..
