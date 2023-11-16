@@ -26,12 +26,12 @@ domain_path = EnvInfo.get_domain()
 instance_path = EnvInfo.get_instance(instance)
 
 # launch the RDDL server
-print(f'initializing the RDDLSimAgent...')
-print(f'domain   = {domain_path}')
-print(f'instance = {instance_path}')
-print(f'rounds   = {rounds}\n')
+print(f'initializing the RDDLSimAgent...', flush=True)
+print(f'domain   = {domain_path}', flush=True)
+print(f'instance = {instance_path}', flush=True)
+print(f'rounds   = {rounds}\n', flush=True)
 agent = RDDLSimAgent(domain_path, instance_path, rounds, 99999)
-print(f'launching the RDDLSimAgent...')
+print(f'launching the RDDLSimAgent...', flush=True)
 agent.run()
 agent.dump_data(os.path.join(os.environ.get('PROST_OUT'), 
                 f'data_{domain}_{instance}_prost_True_{time}.json'))
