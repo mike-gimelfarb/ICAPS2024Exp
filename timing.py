@@ -5,7 +5,7 @@ import sys
 from pyRDDLGym.Core.Jax.JaxRDDLBackpropPlanner import _parse_config_file
     
 
-def esttime(horizon=200, tuning=True, time=1, margin=1):
+def esttime(horizon=40, tuning=True, time=1, margin=1):
     ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
     _, global_args = _parse_config_file(os.path.join(ROOT_PATH, 'global.cfg'))
     
