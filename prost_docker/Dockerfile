@@ -61,19 +61,15 @@ ENV WORKSPACE="/workspace"
 RUN git clone https://github.com/prost-planner/prost
 WORKDIR /workspace/prost
 RUN python build.py
-RUN cp builds/release/rddl_parser/rddl-parser rddl-parser-release
-RUN cp builds/release/search/search search-release
 
 # Copy in the run scripts
-COPY prost.py /workspace/pyRDDLGym/prost.py
+WORKDIR /workspace/pyRDDLGym
+COPY rddlsim.py /workspace/pyRDDLGym/rddlsim.py
 COPY global.cfg /workspace/pyRDDLGym/global.cfg
-RUN mkdir /workspace/bin
-COPY prost.sh /workspace/bin/rddlprost
+COPY prost.sh /workspace/pyRDDLGym/prost.sh
 
-ENV PATH="/workspace/bin:${PATH}"
-RUN chmod -R 777 /workspace/bin
-
-WORKDIR /OUTPUTS
+# Where logs will be written
+RUN mkdir /OUTPUTS
 ENV PROST_OUT="/OUTPUTS"
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/bash", "/workspace/pyRDDLGym/prost.sh"]
