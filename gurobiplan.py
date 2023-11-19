@@ -15,6 +15,7 @@ def gurobi_policy(env, online, tuning, args, outputpath, global_args):
         tuning = GurobiParameterTuningReplan(env,
                                              lookahead_range=lookahead_range,
                                              timeout_training=args['train_seconds'],
+                                             timeout_tuning=global_args['time'],
                                              eval_trials=global_args['trials'],
                                              num_workers=global_args['batch'])        
         T = tuning.tune(key=int(datetime.now().timestamp()),
