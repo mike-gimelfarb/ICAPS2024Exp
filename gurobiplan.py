@@ -11,7 +11,9 @@ def gurobi_policy(env, online, tuning, args, outputpath, global_args):
     # run hyper-parameter tuning
     T = args['rollout_horizon']
     if tuning and online:
+        lookahead_range = list(range(1, 21)) + [22, 24, 26, 28, 30, 35, 40]
         tuning = GurobiParameterTuningReplan(env,
+                                             lookahead_range=lookahead_range,
                                              timeout_training=args['train_seconds'],
                                              eval_trials=global_args['trials'],
                                              num_workers=global_args['batch'])        
