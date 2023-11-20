@@ -50,7 +50,6 @@ def main(domain, instance, method, online, tuning, time):
     EnvInfo = RDDLRepoManager().get_problem(domain)   
     env = RDDLEnv(domain=EnvInfo.get_domain(),
                   instance=EnvInfo.get_instance(instance),
-                  enforce_action_constraints=True,
                   log=True, log_path=outputpath)
     
     # load the config file with planner settings
