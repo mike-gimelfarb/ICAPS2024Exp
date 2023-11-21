@@ -1,7 +1,7 @@
 #!/bin/bash
 # to clear everything inside outputs folder and remake for all baselines
 # use case: bash clear.sh
-find  . -name 'name*' -exec rm {} \;
+find  . -name 'slurm*' -exec rm {} \;
 rm -rf outputs
 mkdir outputs
 cd outputs
