@@ -47,7 +47,7 @@ def main(domain, instance, method, online, tuning, time):
                               f'{domain}_{instance}_{method}_{online}_{time}')
     
     # create the environment
-    EnvInfo = RDDLRepoManager().get_problem(domain)   
+    EnvInfo = RDDLRepoManager(rebuild=True).get_problem(domain)   
     env = RDDLEnv(domain=EnvInfo.get_domain(),
                   instance=EnvInfo.get_instance(instance),
                   enforce_action_constraints=True,
