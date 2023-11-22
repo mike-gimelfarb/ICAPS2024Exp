@@ -14,7 +14,7 @@ DOMAIN_LIST = [
     'CrossingTraffic_MDP_ippc2011',
     'Elevators_MDP_ippc2011',
     'GameOfLife_MDP_ippc2011',
-    'HVAC_ippc2023',
+    'HVAC_ippc2023',  # gurobi doesn't work due to exploitation
     'MarsRover_ippc2023',
     'MountainCar_ippc2023',
     'Navigation_MDP_ippc2011',
@@ -23,11 +23,11 @@ DOMAIN_LIST = [
     'Reservoir_ippc2023',
     'SkillTeaching_MDP_ippc2011',
     'SysAdmin_MDP_ippc2011',
-    'Tamarisk_MDP_ippc2014',
-    'Traffic_MDP_ippc2011',
-    'TriangleTireworld_MDP_ippc2014',
-    'UAV_ippc2023',
-    'Wildfire_MDP_ippc2014'
+    'Tamarisk_MDP_ippc2014',  # gurobi underflow for instance > 5
+    'Traffic_MDP_ippc2014',  # DO
+    'TriangleTireworld_MDP_ippc2014',  # DO
+    'UAV_ippc2023',  # DO
+    'Wildfire_MDP_ippc2014'  # DO
 ]
 
 
