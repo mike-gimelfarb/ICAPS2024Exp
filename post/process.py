@@ -6,6 +6,8 @@ folderpath = r"C:\Users\mgime\Documents\FINAL RDDL RESULTS"
 
     
 def collect_json_to_csv():
+    
+    # combine JSON data
     lines = []
     for (path, _, files) in os.walk(folderpath):
         for file in files:
@@ -22,8 +24,16 @@ def collect_json_to_csv():
     df = pd.DataFrame(lines, columns=['task', 'method', 'mean', 'std'])
     df = df.sort_values(by=['task', 'method'])
     df = df.pivot(index='task', columns='method')
-    df.to_csv('processed.csv')
-                
+    df.to_csv('final_raw.csv')
+    
+    # normalize performance
+    low = df['mean'].min(axis=1, skipna=True)
+    high = df['mean'].max(axis=1, skipna=True)
+    for col in df['mean'].columns:
+        df['mean', col] = (df['mean', col] - low) / (high - low)
+        df['std', col] = (df['std', col] - low) / (high - low)
+    df.to_csv('final_normalized.csv')
+    
 if __name__ == '__main__':
     collect_json_to_csv()
     
