@@ -1,4 +1,5 @@
 import json
+import numpy as np
 import os
 import pandas as pd
 
@@ -27,11 +28,12 @@ def collect_json_to_csv():
     df.to_csv('final_raw.csv')
     
     # normalize performance
-    low = df['mean'].min(axis=1, skipna=True)
+    low = np.maximum(df['mean', 'noop'], df['mean', 'random'])
     high = df['mean'].max(axis=1, skipna=True)
+    normalizer = np.maximum(high - low, 1e-12)
     for col in df['mean'].columns:
-        df['mean', col] = (df['mean', col] - low) / (high - low)
-        df['std', col] = (df['std', col] - low) / (high - low)
+        df['mean', col] = np.clip((df['mean', col] - low) / normalizer, 0., 1.)
+        df['std', col] = df['std', col] / normalizer
     df.to_csv('final_normalized.csv')
     
 if __name__ == '__main__':
