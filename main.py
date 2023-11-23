@@ -24,10 +24,10 @@ DOMAIN_LIST = [
     'SkillTeaching_MDP_ippc2011',
     'SysAdmin_MDP_ippc2011',
     'Tamarisk_MDP_ippc2014',  # gurobi underflow for instance > 5
-    'Traffic_MDP_ippc2014',  # DO
-    'TriangleTireworld_MDP_ippc2014',  # DO
+    'Traffic_MDP_ippc2014',
+    'TriangleTireworld_MDP_ippc2014',
     'UAV_ippc2023',  # DO
-    'Wildfire_MDP_ippc2014'  # DO
+    'Wildfire_MDP_ippc2014'
 ]
 
 
@@ -46,11 +46,17 @@ def main(domain, instance, method, online, tuning, time):
     outputpath = os.path.join(ROOT_PATH, 'outputs', method,
                               f'{domain}_{instance}_{method}_{online}_{time}')
     
+    # due to slight numerical rounding, disable constraint checking for Gurobi
+    if method == 'gurobiplan' and domain.endswith('2023'):
+        enforce_constraints = False
+    else:
+        enforce_constraints = True
+        
     # create the environment
     EnvInfo = RDDLRepoManager(rebuild=True).get_problem(domain)   
     env = RDDLEnv(domain=EnvInfo.get_domain(),
                   instance=EnvInfo.get_instance(instance),
-                  enforce_action_constraints=True,
+                  enforce_action_constraints=enforce_constraints,
                   log=True, log_path=outputpath)
     
     # load the config file with planner settings
