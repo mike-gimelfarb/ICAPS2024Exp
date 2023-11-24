@@ -6,7 +6,7 @@ import pandas as pd
 folderpath = r"C:\Users\mgime\Documents\FINAL RDDL RESULTS"
 
     
-def collect_json_to_csv():
+def collect_json_to_csv(time_ps):
     
     # combine JSON data
     lines = []
@@ -15,17 +15,18 @@ def collect_json_to_csv():
             if file.endswith('.json'):
                 name = os.path.splitext(file)[0]
                 domain, *_, instance, method, online, time = name.split('_')
-                instance = instance.rjust(2, '0')
-                task = f'{domain}_{instance}'
-                with open(os.path.join(path, file)) as contents:
-                    stats = json.load(contents)
-                    mean = stats['mean']
-                    std = stats['std']
-                    lines.append([task, method, mean, std])
+                if int(time) == time_ps:
+                    instance = instance.rjust(2, '0')
+                    task = f'{domain}_{instance}'
+                    with open(os.path.join(path, file)) as contents:
+                        stats = json.load(contents)
+                        mean = stats['mean']
+                        std = stats['std']
+                        lines.append([task, method, mean, std])
     df = pd.DataFrame(lines, columns=['task', 'method', 'mean', 'std'])
     df = df.sort_values(by=['task', 'method'])
     df = df.pivot(index='task', columns='method')
-    df.to_csv('final_raw.csv')
+    df.to_csv(f'final_raw_{time_ps}.csv')
     
     # normalize performance
     low = np.maximum(df['mean', 'noop'], df['mean', 'random'])
@@ -34,8 +35,8 @@ def collect_json_to_csv():
     for col in df['mean'].columns:
         df['mean', col] = np.clip((df['mean', col] - low) / normalizer, 0., 1.)
         df['std', col] = df['std', col] / normalizer
-    df.to_csv('final_normalized.csv')
+    df.to_csv(f'final_normalized_{time_ps}.csv')
     
 if __name__ == '__main__':
-    collect_json_to_csv()
+    collect_json_to_csv(1)
     
