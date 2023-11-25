@@ -13,6 +13,6 @@ echo "Starting RDDL Gym Server..."
 sleep 5
 
 echo "Starting PROST..."
-( cd $WORKSPACE/prost && ./prost.py $1_$2 -p 2323 \
+( cd $WORKSPACE/prost && ./prost.py $1_$2 \
 "[PROST -se [THTS -T TIME -t $3 -act [UCB1] -out [UMC] -backup [PB] -init [Expand -h [IDS]]]]" ) > \
 	$PROST_OUT/prost_$1_$2_prost_True_$3.log 2>&1
