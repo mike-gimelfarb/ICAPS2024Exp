@@ -8,6 +8,7 @@ from pyRDDLGym.Core.Policies.Agents import NoOpAgent, RandomAgent
 
 from rddlrepository.Manager.RDDLRepoManager import RDDLRepoManager as RDDLRepoManager
 
+# next up: 16
 DOMAIN_LIST = [
     'AcademicAdvising_MDP_ippc2014',
     'CooperativeRecon_MDP_ippc2011',
@@ -23,10 +24,10 @@ DOMAIN_LIST = [
     'Reservoir_ippc2023',
     'SkillTeaching_MDP_ippc2011',
     'SysAdmin_MDP_ippc2011',
-    'Tamarisk_MDP_ippc2014',  # gurobi underflow for instance > 5
+    'Tamarisk_MDP_ippc2014',
     'Traffic_MDP_ippc2014',
     'TriangleTireworld_MDP_ippc2014',
-    'UAV_ippc2023',  # DO
+    'UAV_ippc2023',
     'Wildfire_MDP_ippc2014'
 ]
 
@@ -84,11 +85,11 @@ def main(domain, instance, method, online, tuning, time):
     
     elif method == 'noop':
             policy = NoOpAgent(action_space=env.action_space,
-                               num_actions=env.numConcurrentActions)
+                               num_actions=env.max_allowed_actions)
             
     elif method == 'random':
             policy = RandomAgent(action_space=env.action_space,
-                                 num_actions=env.numConcurrentActions)
+                                 num_actions=env.max_allowed_actions)
     
     else:
         raise Exception(f'Invalid method {method}.')
