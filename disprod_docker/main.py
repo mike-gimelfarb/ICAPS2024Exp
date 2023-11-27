@@ -2,6 +2,8 @@ import json
 import sys
 import signal
 import time
+import traceback
+
 # sys.path.append('/home/test/pyRDDLGym')
 import numpy as np
 from pyRDDLGym.Core.Env import RDDLEnv
@@ -68,10 +70,11 @@ def main(env, inst, method_name=None, episodes=1, time_ps=1):
         # Initialize your agent here:
 
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        cfg = prepare_config("_".join(env.lower().split()), f"{current_dir}/config")
+        env_name = "_".join(env.lower().split('_')[:-1])
+        cfg = prepare_config(env_name, f"{current_dir}/config")
 
         checkpoint = time.time()
-        print(f"[Time left: {init_budget - (checkpoint-start)}] Loading config from path {current_dir}/config")
+        print(f"[Time left: {init_budget - (checkpoint-start)}] Loading config {env_name} from path {current_dir}/config")
 
         # Don't reparameterize the RDDL expressions if planner uses sampling
         domain_path = EnvInfo.get_domain()
@@ -196,7 +199,8 @@ def main(env, inst, method_name=None, episodes=1, time_ps=1):
         
         
         ##############################################################
-    except:
+    except Exception:
+        print(traceback.format_exc())
         finish = time.time()
         print('Initialization timed out', finish - start, ' seconds)')
         # print('This domain will continue exclusively with default actions!')
@@ -227,7 +231,8 @@ def main(env, inst, method_name=None, episodes=1, time_ps=1):
 
                     #################################################################
                     finish = time.time()
-                except:
+                except Exception:
+                    print(traceback.format_exc())
                     finish = time.time()
                     print('Timed out! (', finish-start, ' seconds)')
                     print('This episode will continue with default actions!')

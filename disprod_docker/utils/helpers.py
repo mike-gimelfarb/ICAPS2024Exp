@@ -157,7 +157,7 @@ def prepare_cfg_env(env_name, myEnv, rddl_model, cfg):
     cfg_env['bool_ga_idx'] = bool_ga_idx
     cfg_env['real_ga_idx'] = real_ga_idx
     cfg_env["action_space"] = myEnv.action_space
-    cfg_env["n_concurrent_ac"] = myEnv.numConcurrentActions
+    cfg_env["n_concurrent_ac"] = myEnv.max_allowed_actions
     cfg_env["nA"] = len(myEnv.action_space)
     cfg_env["nS"] = len(myEnv.observation_space)
     cfg_env["s_gs_idx"] = s_gs_idx
