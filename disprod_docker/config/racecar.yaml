@@ -1,0 +1,20 @@
+env_name: racecar
+max_episode_steps: 200
+depth: 100
+
+mode: sampling
+
+complete:
+  step_size: 0.001
+  step_size_var: 0.0001
+  n_restarts: 200
+
+sampling:
+  step_size: 0.001
+  step_size_var: 0.0001
+  n_restarts: 200
+
+no_var:
+  step_size: 0.001
+  step_size_var: 0.0001
+  n_restarts: 200
