@@ -4,7 +4,39 @@ import os
 import pandas as pd
 
 folderpath = r"C:\Users\mgime\Documents\FINAL RDDL RESULTS"
+prostpath = r"C:\Users\mgime\Documents\FINAL PROST RESULTS"
 time_combined = True
+
+    
+def prost_raw_to_json():
+    for (path, _, files) in os.walk(prostpath):
+        for file in files:
+            if file.endswith('.json'):
+                name = os.path.splitext(file)[0]
+                _, *doms, inst, _, _, time_ps = name.split('_')
+                domain = '_'.join(doms)
+                output_file = f'{domain}_{inst}_prost_True_{time_ps}.json'
+                stats = None
+                with open(os.path.join(path, file)) as contents:
+                    try:
+                        data = json.load(contents)
+                        round_returns = []
+                        for round_data in data:
+                            round_returns.append(float(round_data[-1]['reward']))
+                        stats = {
+                            'mean': np.mean(round_returns),
+                            'median': np.median(round_returns),
+                            'min': np.min(round_returns),
+                            'max': np.max(round_returns),
+                            'std': np.std(round_returns)
+                        }
+                        print(f'SUCCEED {output_file}')
+                    except Exception as e:
+                        print(f'FAILED {output_file}')
+                        stats = None
+                if stats is not None:
+                    with open(os.path.join(folderpath, 'prost', output_file), 'w') as fp:
+                        json.dump(stats, fp, indent=4)
     
 def collect_json_to_csv(time_ps):
     
@@ -44,8 +76,10 @@ def collect_json_to_csv(time_ps):
         df.to_csv(f'final_normalized.csv')
     else:
         df.to_csv(f'final_normalized_{time_ps}.csv')
+
     
 if __name__ == '__main__':
+    # prost_raw_to_json()
     if time_combined:
         collect_json_to_csv(None)
     else:
