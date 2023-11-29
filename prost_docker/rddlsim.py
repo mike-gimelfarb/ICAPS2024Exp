@@ -30,8 +30,6 @@ instance_path = EnvInfo.get_instance(instance)
 # launch the RDDL server
 agent = RDDLSimAgent(domain_path, instance_path, rounds, 99999)
 agent.run()
-agent.dump_data(os.path.join(os.environ.get('PROST_OUT'), 
-                f'data_{domain}_{instance}_prost_True_{time}.json'))
 
 round_returns = []
 for round_data in agent.logs:
@@ -46,3 +44,6 @@ stats = {
 with open(os.path.join(os.environ.get('PROST_OUT'),
                        f'{domain}_{instance}_prost_True_{time}.json'), "w") as f:
     json.dump(stats, f)
+    
+agent.dump_data(os.path.join(os.environ.get('PROST_OUT'), 
+                f'data_{domain}_{instance}_prost_True_{time}.json'))
