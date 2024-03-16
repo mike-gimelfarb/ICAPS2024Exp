@@ -60,10 +60,13 @@ def collect_json_to_csv(time_ps):
     df = pd.DataFrame(lines, columns=['task', 'method', 'mean', 'std'])
     df = df.sort_values(by=['task', 'method'])
     df = df.pivot(index='task', columns='method')
+    
+    df_out = df.copy(deep=True)
+    df_out.columns = [' '.join(col).strip() for col in df.columns.values]
     if time_combined:
-        df.to_csv(f'final_raw.csv')
+        df_out.to_csv(f'final_raw.csv')
     else:
-        df.to_csv(f'final_raw_{time_ps}.csv')
+        df_out.to_csv(f'final_raw_{time_ps}.csv')
     
     # normalize performance
     low = np.maximum(df['mean', 'noop'], df['mean', 'random'])
@@ -71,7 +74,8 @@ def collect_json_to_csv(time_ps):
     normalizer = np.maximum(high - low, 1e-12)
     for col in df['mean'].columns:
         df['mean', col] = np.clip((df['mean', col] - low) / normalizer, 0., 1.)
-        df['std', col] = df['std', col] / normalizer
+        df['std', col] = np.clip(df['std', col] / normalizer, 0., 1.)
+    df.columns = [' '.join(col).strip() for col in df.columns.values]
     if time_combined:
         df.to_csv(f'final_normalized.csv')
     else:
