@@ -17,6 +17,12 @@ where:
 - ``<tuning>`` whether to do hyperparameter tuning
 - ``<time>`` is the maximum time allowed to think (in seconds) per decision
 
+A batch script is provided to run all the baselines in one go (with tuning):
+
+```shell-session
+source ./run.sh <domain> <online> <time>
+```
+
 To run the prost docker:
 
 ```shell-session
