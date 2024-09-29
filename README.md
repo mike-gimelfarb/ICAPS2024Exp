@@ -2,6 +2,10 @@
 
 This repository contains the code to run the experiments described in the paper [JaxPlan and GurobiPlan: Optimization Baselines for Replanning in Discrete and Mixed Discrete-Continuous Probabilistic Domains](https://ojs.aaai.org/index.php/ICAPS/article/view/31480) published at ICAPS 2024.
 
+## Requirements
+
+You need to install [pyRDDLGym version 1.4.4.](https://github.com/pyrddlgym-project/pyRDDLGym/tree/version_1.4.4_stable).
+
 ## Usage
 
 To run the JAX planner, Gurobi planner and other simple policies (random, no-op), use the command
